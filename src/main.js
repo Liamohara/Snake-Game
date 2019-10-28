@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let key = 39;
+let prevKey = 39;
+let currentKey = null;
 
 class Canvas {
   draw = () => {
@@ -33,25 +34,47 @@ class Snake {
   };
 
   move = () => {
-    if (key === 37) {
-      // Left
-      // while (x % 25 !== 0) {} //!Not working
+    //left
+    console.log(currentKey);
+    if (currentKey === 37 || currentKey === 65) {
+      if (prevKey === 39 || prevKey === 68) {
+        alert("You died!"); //!Create a better prompt that does not use alerts
+        document.location.reload(true);
+      }
+      prevKey = currentKey;
       this.xspeed = -1;
       this.yspeed = 0;
-    } else if (key === 38) {
-      // Up
+    }
+    //up
+    if (currentKey === 38 || currentKey === 87) {
+      console.log(prevKey);
+      if (prevKey === 40 || prevKey === 83) {
+        alert("You died!"); //!Create a better prompt that does not use alerts
+        document.location.reload(true);
+      }
+      prevKey = currentKey;
       this.xspeed = 0;
       this.yspeed = -1;
-    } else if (key === 39) {
-      // Right;
+    }
+    //right
+    if (currentKey === 39 || currentKey === 68) {
+      if (prevKey === 37 || prevKey === 65) {
+        alert("You died!"); //!Create a better prompt that does not use alerts
+        document.location.reload(true);
+      }
+      prevKey = currentKey;
       this.xspeed = 1;
       this.yspeed = 0;
-    } else if (key === 40) {
-      // Down
+    }
+    //down
+    if (currentKey === 40 || currentKey === 83) {
+      if (prevKey === 38 || prevKey === 87) {
+        alert("You died!"); //!Create a better prompt that does not use alerts
+        document.location.reload(true);
+      }
+      prevKey = currentKey;
       this.xspeed = 0;
       this.yspeed = 1;
-    } else {
-      return;
     }
   };
 
@@ -67,13 +90,8 @@ class Snake {
 }
 
 addEventListener("keydown", e => {
-  if (e.keyCode !== key - 2 && e.keyCode !== key + 2) {
-    key = e.keyCode;
-    s.move();
-  } else {
-    alert("You died!"); //!Create a better prompt that does not use alerts
-    document.location.reload(true);
-  }
+  currentKey = e.keyCode;
+  s.move();
 });
 
 const c = new Canvas();
