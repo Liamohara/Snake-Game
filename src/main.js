@@ -24,6 +24,8 @@ class Snake {
     this.yspeed = 0;
   }
   draw = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    c.draw()
     ctx.beginPath();
     ctx.fillStyle = "#000000";
     ctx.fillRect(this.x, this.y, 25, 25);
