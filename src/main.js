@@ -24,8 +24,8 @@ class Snake {
     this.yspeed = 0;
   }
   draw = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    c.draw()
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    c.draw();
     ctx.beginPath();
     ctx.fillStyle = "#000000";
     ctx.fillRect(this.x, this.y, 25, 25);
@@ -35,6 +35,7 @@ class Snake {
   move = () => {
     if (key === 37) {
       // Left
+      // while (x % 25 !== 0) {} //!Not working
       this.xspeed = -1;
       this.yspeed = 0;
     } else if (key === 38) {
@@ -57,21 +58,31 @@ class Snake {
   update = () => {
     this.x = this.x + this.xspeed;
     this.y = this.y + this.yspeed;
+    if (this.x > 600 || this.x < 0 || this.y > 600 || this.y < 0) {
+      alert("You died!"); //!Create a better prompt that does not use alerts
+      document.location.reload(true);
+    }
     this.draw();
   };
 }
 
 addEventListener("keydown", e => {
-  if (e.keyCode !== key) {
+  if (e.keyCode !== key - 2 && e.keyCode !== key + 2) {
     key = e.keyCode;
-    console.log("Recognised!");
     s.move();
+  } else {
+    alert("You died!"); //!Create a better prompt that does not use alerts
+    document.location.reload(true);
   }
 });
 
 const c = new Canvas();
 const s = new Snake();
 
-c.draw();
-
 setInterval(s.update, 5);
+
+//!Add highscore
+//!Increase snake length
+//!Add fruit
+//!Stop snake exiting boundaries
+//!Keep snake in "channels"
