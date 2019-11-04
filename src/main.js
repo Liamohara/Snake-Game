@@ -37,11 +37,9 @@ class Snake {
 
   move = () => {
     //left
-    console.log(currentKey);
     if (currentKey === 37 || currentKey === 65) {
       if (prevKey === 39 || prevKey === 68) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
       this.xSpeed = -1;
@@ -49,10 +47,8 @@ class Snake {
     }
     //up
     if (currentKey === 38 || currentKey === 87) {
-      console.log(prevKey);
       if (prevKey === 40 || prevKey === 83) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
       this.xSpeed = 0;
@@ -61,8 +57,7 @@ class Snake {
     //right
     if (currentKey === 39 || currentKey === 68) {
       if (prevKey === 37 || prevKey === 65) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
       this.xSpeed = 1;
@@ -71,8 +66,7 @@ class Snake {
     //down
     if (currentKey === 40 || currentKey === 83) {
       if (prevKey === 38 || prevKey === 87) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
       this.xSpeed = 0;
@@ -80,24 +74,16 @@ class Snake {
     }
   };
 
-  updateMovement = () => {
-    if (this.prevXSpeed === this.xSpeed) {
+  update = () => {
+    if (this.x % 25 === 0 && this.y % 25 === 0) {
       this.x = this.x + this.xSpeed;
       this.y = this.y + this.ySpeed;
-      prevXSpeed = xSpeed;
-    }
-    if (this.x > 600 || this.x < 0 || this.y > 600 || this.y < 0) {
-      alert("You died!"); //!Create a better prompt that does not use alerts
-      document.location.reload(true);
-    }
-    this.draw();
-  };
-
-  updateDir = () => {
-    if (this.prevXSpeed !== this.xSpeed) {
-      this.x = this.x + this.xSpeed;
-      this.y = this.y + this.ySpeed;
-      prevXSpeed = xSpeed;
+      this.prevXSpeed = this.xSpeed;
+      this.prevYSpeed = this.ySpeed;
+    } else if (this.prevXSpeed !== 0) {
+      this.x = this.x + this.prevXSpeed;
+    } else {
+      this.y = this.y + this.prevYSpeed;
     }
     if (this.x > 600 || this.x < 0 || this.y > 600 || this.y < 0) {
       alert("You died!"); //!Create a better prompt that does not use alerts
@@ -115,8 +101,7 @@ addEventListener("keydown", e => {
 const c = new Canvas();
 const s = new Snake();
 
-setInterval(s.updateMovement, 5);
-setInterval(s.updateDir, 125);
+setInterval(s.update, 5);
 
 //!Add highscore
 //!Increase snake length
