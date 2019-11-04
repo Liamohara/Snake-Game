@@ -21,8 +21,10 @@ class Snake {
     // this.snake = [this.draw(), this.draw()];
     this.x = 300;
     this.y = 300;
-    this.xspeed = 1;
-    this.yspeed = 0;
+    this.prevXSpeed = 1;
+    this.prevYSpeed = 0;
+    this.xSpeed = 1;
+    this.ySpeed = 0;
   }
   draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -35,52 +37,54 @@ class Snake {
 
   move = () => {
     //left
-    console.log(currentKey);
     if (currentKey === 37 || currentKey === 65) {
       if (prevKey === 39 || prevKey === 68) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
-      this.xspeed = -1;
-      this.yspeed = 0;
+      this.xSpeed = -1;
+      this.ySpeed = 0;
     }
     //up
     if (currentKey === 38 || currentKey === 87) {
-      console.log(prevKey);
       if (prevKey === 40 || prevKey === 83) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
-      this.xspeed = 0;
-      this.yspeed = -1;
+      this.xSpeed = 0;
+      this.ySpeed = -1;
     }
     //right
     if (currentKey === 39 || currentKey === 68) {
       if (prevKey === 37 || prevKey === 65) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
-      this.xspeed = 1;
-      this.yspeed = 0;
+      this.xSpeed = 1;
+      this.ySpeed = 0;
     }
     //down
     if (currentKey === 40 || currentKey === 83) {
       if (prevKey === 38 || prevKey === 87) {
-        alert("You died!"); //!Create a better prompt that does not use alerts
-        document.location.reload(true);
+        return;
       }
       prevKey = currentKey;
-      this.xspeed = 0;
-      this.yspeed = 1;
+      this.xSpeed = 0;
+      this.ySpeed = 1;
     }
   };
 
   update = () => {
-    this.x = this.x + this.xspeed;
-    this.y = this.y + this.yspeed;
+    if (this.x % 25 === 0 && this.y % 25 === 0) {
+      this.x = this.x + this.xSpeed;
+      this.y = this.y + this.ySpeed;
+      this.prevXSpeed = this.xSpeed;
+      this.prevYSpeed = this.ySpeed;
+    } else if (this.prevXSpeed !== 0) {
+      this.x = this.x + this.prevXSpeed;
+    } else {
+      this.y = this.y + this.prevYSpeed;
+    }
     if (this.x > 600 || this.x < 0 || this.y > 600 || this.y < 0) {
       alert("You died!"); //!Create a better prompt that does not use alerts
       document.location.reload(true);
