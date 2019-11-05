@@ -1,2 +1,2 @@
 # Snake-Game
-Simple but fun and addictive snake game
+A simple but fun and addictive snake game
