@@ -80,9 +80,8 @@ class Snake {
       this.y = this.y + this.ySpeed;
       this.prevXSpeed = this.xSpeed;
       this.prevYSpeed = this.ySpeed;
-    } else if (this.prevXSpeed !== 0) {
-      this.x = this.x + this.prevXSpeed;
     } else {
+      this.x = this.x + this.prevXSpeed;
       this.y = this.y + this.prevYSpeed;
     }
     if (this.x > 600 || this.x < 0 || this.y > 600 || this.y < 0) {
