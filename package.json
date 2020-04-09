@@ -1,10 +1,10 @@
 {
-    "name": "snake-game",
+    "name": "npmcompilesass",
     "version": "1.0.0",
     "description": "A simple but fun and addictive snake game",
     "main": "main.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+	"build": "gulp html css jss"
     },
     "repository": {
         "type": "git",
@@ -15,15 +15,11 @@
     "bugs": {
         "url": "https://github.com/Liamohara/Snake-Game/issues"
     },
-    "name": "npmcompilesass",
-    "scripts": {
-        "compile-css": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 ./scss/main.scss ./css/main.css",
-        "css-minify": "cleancss --level 1 --format breaksWith=lf --source-map --source-map-inline-sources --output ./css/main.min.css ./css/main.css",
-        "process-css": "npm run compile-css && npm run css-minify"
-    },
     "homepage": "https://github.com/Liamohara/Snake-Game#readme",
     "devDependencies": {
-        "clean-css-cli": "^4.3.0",
-        "node-sass": "^4.13.1"
+        "gulp": "^4.0.2",
+        "gulp-htmlmin": "^5.0.1",
+        "gulp-sass": "^4.0.2",
+        "gulp-terser": "^1.2.0"
     }
 }
