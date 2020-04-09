@@ -1,10 +1,10 @@
 {
-    "name": "npmcompilesass",
+    "name": "snake-game",
     "version": "1.0.0",
     "description": "A simple but fun and addictive snake game",
     "main": "main.js",
     "scripts": {
-	"build": "gulp html css jss"
+	"build": "gulp html css js"
     },
     "repository": {
         "type": "git",
