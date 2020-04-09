@@ -6,3 +6,4 @@ main.min.css
 main.min.css.map
 .DS_Store
 node_modules
+build
