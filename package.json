@@ -4,7 +4,7 @@
     "description": "A simple but fun and addictive snake game",
     "main": "main.js",
     "scripts": {
-	"build": "gulp html css js"
+        "build": "gulp html css js"
     },
     "repository": {
         "type": "git",

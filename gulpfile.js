@@ -1,6 +1,6 @@
 const gulp = require("gulp")
 const html = require("gulp-htmlmin")
-const sass = require("gulp-sass")
+const css = require("gulp-sass")
 const js = require("gulp-terser")
 
 gulp.task("html", () => {
@@ -11,7 +11,7 @@ gulp.task("html", () => {
 
 gulp.task("css", () => {
 	return gulp.src("sass/**/*.scss")
-		.pipe(sass())
+		.pipe(css())
 		.pipe(gulp.dest("build"))
 })
 
