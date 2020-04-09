@@ -1,0 +1,29 @@
+{
+    "name": "snake-game",
+    "version": "1.0.0",
+    "description": "A simple but fun and addictive snake game",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Liamohara/Snake-Game.git"
+    },
+    "author": "Liam O'Hara",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Liamohara/Snake-Game/issues"
+    },
+    "name": "npmcompilesass",
+    "scripts": {
+        "compile-css": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 ./styles/scss/main.scss ./styles/css/main.css",
+        "css-minify": "cleancss --level 1 --format breaksWith=lf --source-map --source-map-inline-sources --output ./styles/css/main.min.css ./styles/css/main.css",
+        "process-css": "npm run compile-css && npm run css-minify"
+    },
+    "homepage": "https://github.com/Liamohara/Snake-Game#readme",
+    "devDependencies": {
+        "clean-css-cli": "^4.3.0",
+        "node-sass": "^4.13.1"
+    }
+}
