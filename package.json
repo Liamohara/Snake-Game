@@ -1,31 +1,29 @@
 {
-    "name": "snake-game",
-    "version": "1.0.0",
-    "description": "A simple but fun and addictive snake game",
-    "main": "main.js",
-    "scripts": {
-        "build": "gulp html css js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Liamohara/Snake-Game.git"
-    },
-    "author": "Liam O'Hara",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Liamohara/Snake-Game/issues"
-    },
-    "homepage": "https://github.com/Liamohara/Snake-Game#readme",
-    "devDependencies": {
-        "@csstools/postcss-sass": "^4.0.0",
-        "gulp": "^4.0.2",
-        "gulp-ext-replace": "^0.3.0",
-        "gulp-htmlmin": "^5.0.1",
-        "gulp-postcss": "^8.0.0",
-        "gulp-sass": "^4.0.2",
-        "gulp-terser": "^1.2.0",
-        "postcss-csso": "^4.0.0",
-        "postcss-scss": "^2.0.0"
-    },
-    "dependencies": {}
+	"name": "snake-game",
+	"version": "1.0.0",
+	"description": "A simple but fun and addictive snake game",
+	"main": "main.js",
+	"scripts": {
+		"build": "gulp html css js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Liamohara/Snake-Game.git"
+	},
+	"author": "Liam O'Hara",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Liamohara/Snake-Game/issues"
+	},
+	"homepage": "https://github.com/Liamohara/Snake-Game#readme",
+	"devDependencies": {
+		"@csstools/postcss-sass": "^4.0.0",
+		"gulp": "^4.0.2",
+		"gulp-ext-replace": "^0.3.0",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-postcss": "^8.0.0",
+		"gulp-terser": "^1.2.0",
+		"postcss-csso": "^4.0.0",
+		"postcss-scss": "^2.0.0"
+	}
 }
