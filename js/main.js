@@ -2,10 +2,8 @@ const canvas = document.getElementById("canvas");
 const checkerboard = canvas.getContext("2d");
 const snake = document.getElementById("snake").getContext("2d");
 const food = document.getElementById("food").getContext("2d");
-let checkerboardRendered = false;
-let foodEaten = true;
-let prevKey = 39;
-let currentKey = null;
+let prevKey;
+let currentKey;
 
 class Canvas {
 	draw() {
@@ -17,17 +15,16 @@ class Canvas {
 				checkerboard.closePath();
 			}
 		}
-		checkerboardRendered = true;
 	}
 }
 
 class Snake {
 	constructor() {
-		this.body = [{ x: 300, y: 300 }];
-		this.prevXSpeed = 0;
-		this.prevYSpeed = 0;
-		this.xSpeed = 0;
-		this.ySpeed = 0;
+		this.body;
+		this.prevXSpeed;
+		this.prevYSpeed;
+		this.xSpeed;
+		this.ySpeed;
 	}
 	draw() {
 		snake.clearRect(0, 0, canvas.width, canvas.height);
@@ -35,7 +32,6 @@ class Snake {
 		snake.fillStyle = "#000000";
 		snake.fillRect(this.body[0].x, this.body[0].y, 25, 25);
 		snake.closePath();
-		this.update();
 	}
 
 	move() {
@@ -91,45 +87,42 @@ class Snake {
 			this.body[0].x === f.coordinate.x &&
 			this.body[0].y === f.coordinate.y
 		) {
-			foodEaten = true;
+			f.draw();
 			//Up
 			if (this.ySpeed < 0) {
-				console.log("1"),
-					this.body.push({
-						x: this.body[0].x,
-						y: this.body[0].y - 25,
-					});
+				this.body.push({
+					x: this.body[0].x,
+					y: this.body[0].y - 25,
+				});
 			} //Down
 			else if (this.ySpeed > 0) {
-				console.log("2"),
-					this.body.push({
-						x: this.body[0].x,
-						y: this.body[0].y + 25,
-					});
+				this.body.push({
+					x: this.body[0].x,
+					y: this.body[0].y + 25,
+				});
 			} //Right
 			else if (this.xSpeed > 0) {
-				console.log("3"),
-					this.body.push({
-						x: this.body[0].x - 25,
-						y: this.body[0].y,
-					});
+				this.body.push({
+					x: this.body[0].x - 25,
+					y: this.body[0].y,
+				});
 			} //Left
 			else {
-				console.log("4");
 				this.body.push({
 					x: this.body[0].x + 25,
 					y: this.body[0].y,
 				});
 			}
 		} else if (
-			this.body[0].x > 600 ||
+			this.body[0].x > canvas.width ||
 			this.body[0].x < 0 ||
-			this.body[0].y > 600 ||
+			this.body[0].y > canvas.height ||
 			this.body[0].y < 0
 		) {
 			alert("You died!");
-			document.location.reload(true);
+			start();
 		}
+		this.draw();
 	}
 }
 
@@ -137,7 +130,7 @@ class Food {
 	constructor() {
 		this.coordinate = {};
 	}
-	generate() {
+	draw() {
 		this.coordinate = {
 			x: Math.round((Math.random() * (canvas.width - 25 / 2)) / 25) * 25,
 			y: Math.round((Math.random() * (canvas.height - 25 / 2)) / 25) * 25,
@@ -147,18 +140,17 @@ class Food {
 		food.fillStyle = "#ff0066";
 		food.fillRect(this.coordinate.x, this.coordinate.y, 25, 25);
 		food.closePath();
-		foodEaten = false;
 	}
 }
 
-update = () => {
-	if (checkerboardRendered === false) {
-		c.draw();
-	}
-	if (foodEaten === true) {
-		f.generate();
-	}
-	s.draw();
+start = () => {
+	c.draw();
+	f.draw();
+	s.body = [{ x: 300, y: 300 }];
+	s.prevXSpeed = 0;
+	s.prevYSpeed = 0;
+	s.xSpeed = 0;
+	s.ySpeed = 0;
 };
 
 const c = new Canvas();
@@ -170,9 +162,11 @@ addEventListener("keydown", (e) => {
 	s.move();
 });
 
-setInterval(update, 5);
+setInterval(s.update.bind(s), 5);
 
-//!Add highscore
+start();
+
+//!Add score counter
 //!Increase snake length
 //!Add fruit
 //!Move snake on first key press
