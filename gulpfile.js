@@ -23,7 +23,7 @@ const jsMinifyConfig = {
 		unsafe: true,
 		passes: 2,
 		keep_fargs: false,
-		drop_console: false,
+		drop_console: true,
 		arguments: true,
 	},
 	mangle: {
