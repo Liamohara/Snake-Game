@@ -68,6 +68,7 @@ class Snake {
 				return;
 			}
 			prevKey = currentKey;
+			console.log(prevKey);
 			this.xSpeed = 0;
 			this.ySpeed = 1;
 		}
@@ -114,9 +115,9 @@ class Snake {
 				});
 			}
 		} else if (
-			this.body[0].x > canvas.width ||
+			this.body[0].x > 600 ||
 			this.body[0].x < 0 ||
-			this.body[0].y > canvas.height ||
+			this.body[0].y > 600 ||
 			this.body[0].y < 0
 		) {
 			alert("You died!");
@@ -151,6 +152,7 @@ start = () => {
 	s.prevYSpeed = 0;
 	s.xSpeed = 0;
 	s.ySpeed = 0;
+	prevKey = null;
 };
 
 const c = new Canvas();
