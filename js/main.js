@@ -167,11 +167,3 @@ addEventListener("keydown", (e) => {
 setInterval(s.update.bind(s), 5);
 
 start();
-
-//!Add score counter
-//!Increase snake length
-//!Add fruit
-//!Move snake on first key press
-//!Create a better prompt that does not use alerts
-//! Add mobile compatibility
-//! Use scalable size
