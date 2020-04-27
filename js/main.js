@@ -1,7 +1,25 @@
+"use strict";
+
+for (let tag = 0; tag < 3; tag++) {
+	ctx = document.getElementsByTagName("canvas")[tag];
+	if (
+		document.documentElement.clientHeight <=
+		document.documentElement.clientWidth
+	) {
+		ctx.height = Math.floor(document.documentElement.clientHeight / 25) * 25;
+		ctx.width = Math.floor(document.documentElement.clientHeight / 25) * 25;
+	} else {
+		ctx.height = Math.floor(document.documentElement.clientWidth / 25) * 25;
+		ctx.width = Math.floor(document.documentElement.clientWidth / 25) * 25;
+	}
+}
+
 const canvas = document.getElementById("canvas");
 const checkerboard = canvas.getContext("2d");
 const snake = document.getElementById("snake").getContext("2d");
 const food = document.getElementById("food").getContext("2d");
+const squareSize = canvas.height / 25;
+const updateTime = (5 * 600) / canvas.height;
 let prevKey;
 let currentKey;
 
@@ -11,7 +29,12 @@ class Canvas {
 			for (var j = 0; j < 25; j++) {
 				checkerboard.beginPath();
 				checkerboard.fillStyle = ["#aad751", "#a2d149"][(i + j) % 2];
-				checkerboard.fillRect(j * 25, i * 25, 25, 25);
+				checkerboard.fillRect(
+					j * squareSize,
+					i * squareSize,
+					squareSize,
+					squareSize
+				);
 				checkerboard.closePath();
 			}
 		}
@@ -27,10 +50,10 @@ class Snake {
 		this.ySpeed;
 	}
 	draw() {
-		snake.clearRect(0, 0, canvas.width, canvas.height);
+		snake.clearRect(0, 0, canvas.height, canvas.width);
 		snake.beginPath();
 		snake.fillStyle = "#000000";
-		snake.fillRect(this.body[0].x, this.body[0].y, 25, 25);
+		snake.fillRect(this.body[0].x, this.body[0].y, squareSize, squareSize);
 		snake.closePath();
 	}
 
@@ -68,14 +91,16 @@ class Snake {
 				return;
 			}
 			prevKey = currentKey;
-			console.log(prevKey);
 			this.xSpeed = 0;
 			this.ySpeed = 1;
 		}
 	}
 
 	update() {
-		if (this.body[0].x % 25 === 0 && this.body[0].y % 25 === 0) {
+		if (
+			this.body[0].x % squareSize === 0 &&
+			this.body[0].y % squareSize === 0
+		) {
 			this.body[0].x = this.body[0].x + this.xSpeed;
 			this.body[0].y = this.body[0].y + this.ySpeed;
 			this.prevXSpeed = this.xSpeed;
@@ -93,31 +118,31 @@ class Snake {
 			if (this.ySpeed < 0) {
 				this.body.push({
 					x: this.body[0].x,
-					y: this.body[0].y - 25,
+					y: this.body[0].y - squareSize,
 				});
 			} //Down
 			else if (this.ySpeed > 0) {
 				this.body.push({
 					x: this.body[0].x,
-					y: this.body[0].y + 25,
+					y: this.body[0].y + squareSize,
 				});
 			} //Right
 			else if (this.xSpeed > 0) {
 				this.body.push({
-					x: this.body[0].x - 25,
+					x: this.body[0].x - squareSize,
 					y: this.body[0].y,
 				});
 			} //Left
 			else {
 				this.body.push({
-					x: this.body[0].x + 25,
+					x: this.body[0].x + squareSize,
 					y: this.body[0].y,
 				});
 			}
 		} else if (
-			this.body[0].x > 600 ||
+			this.body[0].x > canvas.width - squareSize ||
 			this.body[0].x < 0 ||
-			this.body[0].y > 600 ||
+			this.body[0].y > canvas.height - squareSize ||
 			this.body[0].y < 0
 		) {
 			alert("You died!");
@@ -133,13 +158,19 @@ class Food {
 	}
 	draw() {
 		this.coordinate = {
-			x: Math.round((Math.random() * (canvas.width - 25 / 2)) / 25) * 25,
-			y: Math.round((Math.random() * (canvas.height - 25 / 2)) / 25) * 25,
+			x:
+				Math.round(
+					(Math.random() * (canvas.width - squareSize / 2)) / squareSize
+				) * squareSize,
+			y:
+				Math.round(
+					(Math.random() * (canvas.height - squareSize / 2)) / squareSize
+				) * squareSize,
 		};
-		food.clearRect(0, 0, canvas.width, canvas.height);
+		food.clearRect(0, 0, canvas.height, canvas.width);
 		food.beginPath();
 		food.fillStyle = "#ff0066";
-		food.fillRect(this.coordinate.x, this.coordinate.y, 25, 25);
+		food.fillRect(this.coordinate.x, this.coordinate.y, squareSize, squareSize);
 		food.closePath();
 	}
 }
@@ -147,7 +178,9 @@ class Food {
 start = () => {
 	c.draw();
 	f.draw();
-	s.body = [{ x: 300, y: 300 }];
+	s.body = [
+		{ x: (canvas.width - squareSize) / 2, y: (canvas.height - squareSize) / 2 },
+	];
 	s.prevXSpeed = 0;
 	s.prevYSpeed = 0;
 	s.xSpeed = 0;
@@ -164,6 +197,6 @@ addEventListener("keydown", (e) => {
 	s.move();
 });
 
-setInterval(s.update.bind(s), 5);
+setInterval(s.update.bind(s), updateTime);
 
 start();
