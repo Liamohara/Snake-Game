@@ -19,7 +19,7 @@ const checkerboard = canvas.getContext("2d");
 const snake = document.getElementById("snake").getContext("2d");
 const food = document.getElementById("food").getContext("2d");
 const squareSize = canvas.height / 25;
-const updateTime = (5 * 600) / canvas.height;
+const fps = (5 * 600) / canvas.height;
 let prevKey;
 let currentKey;
 
@@ -197,6 +197,6 @@ addEventListener("keydown", (e) => {
 	s.move();
 });
 
-setInterval(s.update.bind(s), updateTime);
+setInterval(s.update.bind(s), fps);
 
 start();
