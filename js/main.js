@@ -1,5 +1,6 @@
 "use strict";
 
+// Calculating and storing height and width of canvas elements to ctx.height and ctx.width
 for (let tag = 0; tag < 3; tag++) {
 	ctx = document.getElementsByTagName("canvas")[tag];
 	if (
@@ -14,15 +15,21 @@ for (let tag = 0; tag < 3; tag++) {
 	}
 }
 
+// Declaring Variables
 const canvas = document.getElementById("canvas");
 const checkerboard = canvas.getContext("2d");
 const snake = document.getElementById("snake").getContext("2d");
 const food = document.getElementById("food").getContext("2d");
 const squareSize = canvas.height / 25;
 const fps = (5 * 600) / canvas.height;
-let prevKey;
-let currentKey;
+let prevDir;
+let key;
+let touchStartX;
+let touchStartY;
+let touchEndX;
+let touchEndY;
 
+// Helper classes
 class Canvas {
 	draw() {
 		for (var i = 0; i < 25; i++) {
@@ -57,42 +64,82 @@ class Snake {
 		snake.closePath();
 	}
 
-	move() {
+	keyMove() {
 		//Left
-		if (currentKey === 37 || currentKey === 65) {
-			if (prevKey === 39 || prevKey === 68) {
+		if (key === 37 || key === 65) {
+			if (prevDir === "right") {
 				return;
 			}
-			prevKey = currentKey;
+			prevDir = "left";
 			this.xSpeed = -1;
 			this.ySpeed = 0;
 		}
 		//Up
-		else if (currentKey === 38 || currentKey === 87) {
-			if (prevKey === 40 || prevKey === 83) {
+		else if (key === 38 || key === 87) {
+			if (prevDir === "down") {
 				return;
 			}
-			prevKey = currentKey;
+			prevDir = "up";
 			this.xSpeed = 0;
 			this.ySpeed = -1;
 		}
 		//Right
-		else if (currentKey === 39 || currentKey === 68) {
-			if (prevKey === 37 || prevKey === 65) {
+		else if (key === 39 || key === 68) {
+			if (prevDir === "left") {
 				return;
 			}
-			prevKey = currentKey;
+			prevDir = "right";
 			this.xSpeed = 1;
 			this.ySpeed = 0;
 		}
 		//Down
-		else if (currentKey === 40 || currentKey === 83) {
-			if (prevKey === 38 || prevKey === 87) {
+		else if (key === 40 || key === 83) {
+			if (prevDir === "up") {
 				return;
 			}
-			prevKey = currentKey;
+			prevDir = "down";
 			this.xSpeed = 0;
 			this.ySpeed = 1;
+		}
+	}
+
+	touchMove() {
+		if (Math.abs(touchEndX - touchStartX) > Math.abs(touchEndY - touchStartY)) {
+			//Right
+			if (touchEndX - touchStartX > 1) {
+				if (prevDir === "left") {
+					return;
+				}
+				prevDir = "right";
+				this.xSpeed = 1;
+				this.ySpeed = 0;
+			} //Left
+			else {
+				if (prevDir === "right") {
+					return;
+				}
+				prevDir = "left";
+				this.xSpeed = -1;
+				this.ySpeed = 0;
+			}
+		} else {
+			//Down
+			if (touchEndY - touchStartY > 1) {
+				if (prevDir === "up") {
+					return;
+				}
+				prevDir = "down";
+				this.xSpeed = 0;
+				this.ySpeed = 1;
+			} //Up
+			else {
+				if (prevDir === "down") {
+					return;
+				}
+				prevDir = "up";
+				this.xSpeed = 0;
+				this.ySpeed = -1;
+			}
 		}
 	}
 
@@ -185,18 +232,32 @@ start = () => {
 	s.prevYSpeed = 0;
 	s.xSpeed = 0;
 	s.ySpeed = 0;
-	prevKey = null;
+	prevDir = null;
 };
 
+// Create objects
 const c = new Canvas();
 const s = new Snake();
 const f = new Food();
 
+// Event listners
 addEventListener("keydown", (e) => {
-	currentKey = e.keyCode;
-	s.move();
+	key = e.keyCode;
+	s.keyMove();
 });
 
+addEventListener("touchstart", (event) => {
+	touchStartX = event.changedTouches[0].screenX;
+	touchStartY = event.changedTouches[0].screenY;
+});
+
+addEventListener("touchend", (event) => {
+	touchEndX = event.changedTouches[0].screenX;
+	touchEndY = event.changedTouches[0].screenY;
+	s.touchMove();
+});
+// Update Snake position
 setInterval(s.update.bind(s), fps);
 
+// Trigger
 start();
